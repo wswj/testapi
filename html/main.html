@@ -1,0 +1,350 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        #con {
+            margin: 10px;
+            font-size: 24px;
+        }
+        
+        ul {
+            margin-bottom: 10px;
+        }
+        
+        ul li {
+            margin: 5px 10px;
+            padding: 5px;
+            color: #000;
+            word-wrap: break-word;
+        }
+        
+        html,
+        body {
+            height: 100%;
+        }
+        
+        body {
+            background-image: url("../image/login.jpg");
+            background-size: 100% 100%;
+        }
+        
+        .top {
+            color: #000;
+            font-size: 20px;
+            text-align: center;
+            height: 30px;
+            line-height: 30px;
+        }
+        
+        .content {
+            height: 60%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            justify-content: space-around;
+        }
+        
+        .hy {
+            color: rgb(255, 255, 255);
+            font-size: 25px;
+            align-self: flex-start;
+        }
+        
+        .top-lable {
+            align-self: flex-start;
+            font-size: 16px;
+        }
+        
+        .sign-input {
+            display: flex;
+            flex-direction: row;
+            align-self: flex-start;
+            width: 100%;
+            padding-top: 10px;
+        }
+        
+        .sign-input div:nth-child(1) {
+            flex: 1.5;
+            font-size: 14px;
+        }
+        
+        .sign-input div:nth-child(2) {
+            flex: 8.5;
+        }
+        
+        .sign-input input {
+            outline: none;
+            border-bottom: 2px solid grey;
+            width: 100%;
+        }
+        
+        .sign-bottom {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            color: grey;
+        }
+        
+        .sign-bottom div {
+            color: darkgray;
+        }
+        
+        .sign-bottom a {
+            color: grey;
+        }
+        
+        .login {
+            background: linear-gradient(to right, #f8ff74, #46fcba);
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            color: rgb(255, 255, 255);
+            width: 100%;
+            border-radius: 20px;
+        }
+        
+        .login-disable {
+            background: #eee;
+        }
+        
+        .unlock {
+            background-color: lightpink;
+            border: red 1px solid;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            color: rgb(255, 255, 255);
+            width: 100%;
+            border-radius: 20px;
+        }
+        
+        .item {
+            display: flex;
+            flex-direction: column;
+            align-self: flex-start;
+            width: 100%;
+        }
+        
+        .ali-box {
+            width: 100%!important;
+        }
+        
+        ._nc .stage1 .slider {
+            width: 92%;
+            height: 52px !important;
+            border-radius: 4px !important;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.5)!important;
+            background: #fff !important;
+        }
+        
+        ._nc .stage1 .button {
+            height: 50px;
+            border-radius: 4px;
+            /*background: #FFF !important;*/
+            background: #F0FCEA !important;
+        }
+        
+        ._nc .stage1 .track div {
+            border-radius: 4px !important;
+            color: #fff !important;
+        }
+        
+        ._nc .stage1 .bg-green {
+            background-color: #78c430 !important;
+        }
+        
+        ._nc .stage1 .bg-red {
+            background-color: #78c430 !important;
+        }
+        
+        ._nc .stage3 .title {
+            font-size: 16px;
+            color: #777;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">
+        <div class="top-right">用户登录</div>
+    </div>
+    <div class="content">
+        <div class="hy">欢迎来到云点短视频</div>
+        <div class="item">
+            <span class="top-lable">手机号</span>
+            <div class="sign-input">
+                <div class="sign-input-left">手机号</div>
+                <div><input type="text" id="phonenumber" placeholder="请输入手机号码"></div>
+            </div>
+        </div>
+        <div class="item">
+            <span class="top-lable">密码</span>
+            <div class="sign-input">
+                <div>密码</div>
+                <div><input type="password" id="password" placeholder="请输入密码"></div>
+            </div>
+        </div>
+        <div class="sign-bottom">
+            <div><a href="#">忘记密码</a></div>
+            <div><a href="#">注册账号</a></div>
+        </div>
+        <div id="__nc" class="ali-box">
+            <div id="nc"></div>
+        </div>
+        <div class="login login-disable" tapmod onclick="_login()">登录</div>
+        <div class="unlock">解绑</div>
+    </div>
+
+</body>
+<script type="text/javascript" src="../js/api.js"></script>
+<script src="../js/ali_nc.js"></script>
+<script src="../js/common.js"></script>
+<script src="../js/index.js"></script>
+<script src="../js/app.js"></script>
+<script type="text/javascript">
+    var loginFlag = false;
+    var nc = null;
+    var nc_token = "";
+    var sig = "";
+    var sessionid = "";
+    apiready = function() {
+        api.parseTapmode();
+        var top = $api.dom(".top");
+        $api.fixStatusBar(top);
+        initAliNC();
+        if ($api.getStorage('loginmobile')) {
+            document.getElementById("phonenumber").value = $api.getStorage('loginmobile');
+        }
+
+    };
+    //初始化阿里滑块
+    function initAliNC() {
+        //滑块token
+        nc_token = ["FFFF0N0N00000000853E", (new Date()).getTime(), Math.random()].join(':');
+        //滑块初始化信息
+        nc = NoCaptcha.init({
+            renderTo: '#nc',
+            appkey: "FFFF0N0N00000000853E",
+            scene: "nc_login_h5",
+            token: nc_token,
+            trans: {
+                "key1": "code200"
+            },
+            elementID: ["usernameID"],
+            is_Opt: 0,
+            language: "cn",
+            timeout: 10000,
+            retryTimes: 5,
+            errorTimes: 5,
+            inline: false,
+            apimap: {
+                // 'analyze': '//a.com/nocaptcha/analyze.jsonp',
+                // 'uab_Url': '//aeu.alicdn.com/js/uac/909.js',
+            },
+            bannerHidden: false,
+            initHidden: false,
+            // 方法回调,滑块通过后赋值得到的sessionid,sig,loginFlage标志值为true
+            callback: function(data) {
+                // console.log('sessionid:' + data.csessionid + ',token:' + nc_token + ',sig:' + data.sig + ',sence:register');
+                loginFlag = true;
+
+                $api.removeCls($api.dom('.login'), 'login-disable');
+                sessionid = data.csessionid;
+                sig = data.sig;
+            },
+            error: function(s) {
+                $api.addCls($api.dom('.login'), 'login-disable');
+                loginFlag = false;
+                nc.reset();
+                console.log(JSON.stringify(s));
+            }
+        });
+        NoCaptcha.setEnabled(true);
+        nc.reset(); //请务必确保这里调用一次reset()方法
+        //滑块验证信息
+        NoCaptcha.upLang('cn', {
+            'LOADING': "加载中...", //加载
+            'SLIDER_LABEL': "请向右滑动验证", //等待滑动
+            'CHECK_Y': "验证通过", //通过
+            'ERROR_TITLE': "非常抱歉，这出错了", //拦截
+            'CHECK_N': "验证未通过", //准备唤醒二次验证
+            'OVERLAY_INFORM': "经检测你当前操作环境存在风险，请输入验证码", //二次验证
+            'TIPS_TITLE': "验证码错误，请重新输入" //验证码输错时的提示
+        });
+    }
+
+    function _login() {
+        var phone = $api.byId('phonenumber').value;
+        var password = $api.byId("password").value;
+        if (!loginFlag) {
+            return;
+        }
+        if (!password) {
+            $api.byId("password").focus();
+            return _msg("请输入密码");
+
+        }
+        if (password.length < 4) {
+            $api.byId("password").focus();
+            return _msg("密码格式错误");
+
+        }
+        if (!phone) {
+            $api.byId("phonenumber").focus();
+            return _msg("请输入手机号");
+
+        }
+        if (!isPhoneNumber(phone)) {
+
+            $api.byId("phonenumber").focus();
+            return _msg("手机号格式错误");
+        }
+        document.activeElement.blur();
+        $api.setStorage('loginmobile', phone);
+        api.ajax({
+            url: baseurl + 'user/login',
+            method: 'post',
+            timeout: 30,
+            dataType: 'json',
+            returnAll: false,
+            data: {
+                values: {
+                    mobile: phone,
+                    password: password,
+                    device_code: api.deviceId,
+                    sessionid: sessionid,
+                    nctoken: nc_token,
+                    sig: sig,
+                    scene: "nc_login_h5"
+                }
+            }
+        }, function(ret, err) {
+            if (ret.code == 200) {
+                api.alert({
+                    title: 'title',
+                    msg: '登录成功'
+                });
+            } else {
+                nc.reset();
+                return _msg(ret.err);
+            };
+        });
+
+    }
+</script>
+
+</html>
