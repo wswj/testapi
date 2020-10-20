@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页顶部</title>
+    <link rel="stylesheet" href="../css/api.css">
+    <style>
+        #main {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            height: 30px;
+            line-height: 30px;
+            width: 100%;
+            background-color: transparent;
+            color: black;
+        }
+        
+        .middle {
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .ge {
+            width: 10px;
+            background-color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <div class="left">搜索</div>
+        <div class="middle">
+            <div>关注</div>
+            <div class="ge"></div>
+            <div>推荐</div>
+        </div>
+        <div class="right">直播</div>
+    </div>
+</body>
+<script src="../js/api.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+        var main = $api.byId("main");
+
+        $api.fixStatusBar(main);
+        mainh = $api.offset(main).h;
+
+        api.setFrameAttr({
+            name: 'home_header',
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: mainh,
+            }
+        });
+    }
+</script>
+
+</html>

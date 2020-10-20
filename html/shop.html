@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/api.css">
+    <style>
+        #header {
+            background-color: rgb(241, 123, 123);
+            height: 30px;
+            line-height: 30px;
+        }
+        
+        .nav {
+            background: #ddd;
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header">小店</div>
+    <div class="nav"></div>
+</body>
+<script src="../js/api.js"></script>
+<script src="../js/app.js"></script>
+<script>
+    var NVNavigationBar, header, typeid_data, nav
+    apiready = function() {
+        header = $api.byId("header");
+        nav = $api.dom('.nav');
+        $api.fixStatusBar(header);
+        NVNavigationBar = api.require('NVNavigationBar');
+        typeid_data = $api.getStorage('config').typeid;
+
+        type();
+    }
+
+    function type() {
+        NVNavigationBar.open({
+            rect: {
+                x: 0,
+                y: $api.offset(header).h,
+                w: api.winWidth,
+                h: $api.offset(nav).h
+            },
+            styles: {
+                orientation: 'horizontal',
+                bg: '#F0F0F0',
+                bgAlpha: 1,
+                font: {
+                    size: 14,
+                    sizeSelected: 16,
+                    color: '#333',
+                    colorSelected: '#FF2D4B',
+                    alpha: 1
+                },
+                itemSize: {
+                    w: 75,
+                    h: $api.offset(nav).h
+                },
+                bounces: true,
+            },
+            items: typeid_data.a,
+            selectedIndex: 0,
+            fixedOn: api.frameName,
+            id: 'shop'
+        }, function(ret, err) {
+            if (ret.eventType == 'click') {
+                api.setFrameGroupIndex({
+                    name: 'shop',
+                    index: ret.index,
+                    scroll: true, //是否平滑滚动至目标窗口，即是否带有动画
+                });
+
+            }
+        });
+        var frames = [];
+        for (var i = 0; i < typeid_data.b.length; i++) {
+            var frame = {};
+            frame.name = "shop_" + i;
+            frame.url = "./shopitem.html";
+            frame.pageParam = {
+                i: i,
+                typeid: typeid_data.b[i]
+            };
+            frames.push(frame);
+        }
+        openFrameGroup(frames);
+    }
+
+    function openFrameGroup(frames) {
+        api.openFrameGroup({
+            name: 'shop',
+            scrollEnabled: true,
+            rect: {
+                x: 0,
+                y: $api.offset(nav).h + $api.offset(header).h,
+                w: 'auto',
+                h: api.winHeight - ($api.offset(nav).h + $api.offset(header).h)
+            },
+            index: 0,
+            frames: frames
+        }, function(ret, err) {
+            //设置选中的导航目标
+            NVNavigationBar.setSelected({
+                id: 'shop',
+                index: ret.index,
+                selected: true
+            });
+        });
+    }
+</script>
+
+</html>

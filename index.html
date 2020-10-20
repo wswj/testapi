@@ -75,6 +75,8 @@
     </div>
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
+<script src="./js/crypto-js.js"></script>
+<script src="./js/app.js"></script>
 <script src="./js/index.js"></script>
 <script type="text/javascript">
     apiready = function() {
@@ -87,17 +89,14 @@
         var headerPos = $api.offset(header);
         var main = $api.byId('main');
         var mainPos = $api.offset(main);
-        api.openFrame({
-
+        //获取应用配置信息
+        appConfig();
+        api.openWin({
             name: 'main',
-            url: 'html/main.html',
-            bounces: true,
-
-            rect: {
-                x: 0,
-                y: 0,
-                w: 'auto',
-                h: 'auto'
+            url: './html/main.html',
+            bounces: false,
+            pageParam: {
+                key: 'value'
             }
         });
 

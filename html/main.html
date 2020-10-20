@@ -333,10 +333,27 @@
                 }
             }
         }, function(ret, err) {
+            $api.setStorage('token', ret.ret);
             if (ret.code == 200) {
-                api.alert({
-                    title: 'title',
-                    msg: '登录成功'
+                // api.({
+                //     name: 'home',
+                //     url: './home.html',
+                //     bounces: true,
+
+                //     rect: {
+                //         x: 0,
+                //         y: 0,
+                //         w: 'auto',
+                //         h: 'auto'
+                //     }
+                // });
+                //打开tabLayout布局
+                //本方法继承了openWin方法的所有参数，同时在此基础上增加了navigationBar、tabBar等参数，来设置和使用原生的顶部导航栏和底部标签栏，可以通过closeWin方法来关闭页面。
+                api.openTabLayout({
+                    name: 'home',
+                    url: "./home.html",
+                    reload: true,
+
                 });
             } else {
                 nc.reset();

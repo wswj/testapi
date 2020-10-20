@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="../css/api.css">
+    <style>
+        #main {
+            height: 30px;
+            line-height: 30px;
+            background-color: transparent;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            color: black;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <div onclick="_index_win('home')" tapmode>首页</div>
+        <div onclick="_index_win('shop')" tapmode>热点</div>
+        <div onclick="_index_win('task')" tapmode>任务</div>
+        <div onclick="_index_win('member')" tapmode>我的</div>
+    </div>
+</body>
+<script src="../js/api.js"></script>
+<script src="../js/app.js"></script>
+<script>
+    apiready = function() {
+        api.parseTapmode();
+        var bottom = $api.byId("main");
+        var footerh = $api.offset(bottom).h;
+        api.setFrameAttr({
+            name: 'home_footer',
+            rect: {
+                x: 0,
+                y: api.winHeight - footerh,
+                w: 'auto',
+                h: footerh
+            },
+        });
+    }
+</script>
+
+</html>

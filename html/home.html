@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/api.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            background-color: transparent;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div>
+        首页
+    </div>
+</body>
+<script src="../js/api.js"></script>
+<script>
+    apiready = function() {
+
+        openHomeHeader();
+
+        openHomeFooter();
+        api.bringFrameToFront({
+            from: 'home_header',
+        });
+        api.bringFrameToFront({
+            from: 'home_footer',
+        });
+    }
+
+    function openHomeHeader() {
+
+        var url = "home_header";
+        api.openFrame({
+            name: url,
+            url: './' + url + ".html",
+            bounces: true,
+            rect: {
+                x: 0,
+                y: 0,
+                w: 0,
+                h: 0
+            }
+        });
+    }
+
+
+
+    function openHomeFooter() {
+        var url = "home_footer";
+        api.openFrame({
+            name: url,
+            url: './' + url + ".html",
+            bounces: true,
+            rect: {
+                x: 0,
+                y: 0,
+                w: 0,
+                h: 0
+            }
+        });
+    };
+</script>
+
+</html>
